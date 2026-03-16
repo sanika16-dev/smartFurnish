@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login | Smart Furnish</title>
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    body {
+      background: #f6f1eb;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .auth-box {
+      background: #ffffff;
+      padding: 35px;
+      width: 380px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+      text-align: center;
+    }
+
+    .auth-box h2 {
+      margin-bottom: 20px;
+      color: #2e2e2e;
+    }
+
+    .auth-box input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+    }
+
+    .auth-box button {
+      width: 100%;
+      padding: 12px;
+      background: #8b5e3c;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 10px;
+      font-size: 15px;
+    }
+
+    .divider {
+      margin: 20px 0;
+      font-size: 14px;
+      color: #777;
+    }
+
+    .brand {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #8b5e3c;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="auth-box">
+    <div class="brand">Smart Furnish</div>
+    <h2>Login</h2>
+
+    <!-- LOGIN -->
+    <input id="email" type="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Password">
+    <button type="button" id="loginBtn">Login</button>
+
+    <div class="divider">──────── OR ────────</div>
+
+    <h2>Register</h2>
+
+    <!-- REGISTER -->
+    <input id="rname" type="text" placeholder="Full Name">
+    <input id="remail" type="email" placeholder="Email">
+    <input id="rpassword" type="password" placeholder="Password">
+    <button type="button" id="registerBtn">Create Account</button>
+  </div>
+
+  <script>
+    // REGISTER
+    document.getElementById("registerBtn").addEventListener("click", async function () {
+      alert("Register button clicked"); // 🔍 Test alert
+
+      const name = document.getElementById("rname").value;
+      const email = document.getElementById("remail").value;
+      const password = document.getElementById("rpassword").value;
+
+      try {
+        const res = await fetch("http://localhost:5000/api/auth/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, password })
+        });
+
+        const data = await res.json();
+        alert(data.message || "Registered");
+      } catch (err) {
+        console.error("Register error:", err);
+        alert("Registration failed. Check console.");
+      }
+    });
+
+    // LOGIN
+    document.getElementById("loginBtn").addEventListener("click", async function () {
+      alert("Login button clicked"); // 🔍 Test alert
+
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      try {
+        const res = await fetch("http://localhost:5000/api/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+
+        if (data.userId) {
+          localStorage.setItem("userId", data.userId);
+          localStorage.setItem("userName", data.name);
+          alert("Login successful");
+          const params = new URLSearchParams(window.location.search);
+          const redirect = params.get("redirect");
+
+          if (redirect === "payment") {
+          window.location.href = "payment.html";
+          } else {
+          window.location.href = "index.html";
+          }
+
+        } else {
+          alert(data.message || "Login failed");
+        }
+      } catch (err) {
+        console.error("Login error:", err);
+        alert("Login failed. Check console.");
+      }
+    });
+  </script>
+
+</body>
+</html>

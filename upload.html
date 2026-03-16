@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sell Furniture</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+ <!-- NAVBAR -->
+ <div class="navbar">
+  <div class="logo">Smart Furnish</div>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="products.html">Buy</a>
+    <a href="upload.html">Sell</a>
+    <a href="cart.html">Cart</a>
+  </div>
+</div>
+<h2>Sell Your Furniture</h2>
+
+<form onsubmit="calculateProfit(event)">
+  <label>Product Name:</label>
+  <input type="text" id="pname" required>
+
+  <label>Your Expected Price:</label>
+  <input type="number" id="price" required>
+
+  <label>Upload Product Image:</label>
+  <input type="file" id="image" accept="image/*">
+  <img id="preview" width="200">
+
+
+  <button type="submit">Calculate Profit</button>
+</form>
+
+<h3>Profit Breakdown</h3>
+<table>
+  <tr>
+    <th>Seller Profit</th>
+    <th>Website Commission</th>
+    <th>Final Price</th>
+  </tr>
+  <tr>
+    <td id="sellerProfit">-</td>
+    <td id="siteProfit">-</td>
+    <td id="finalPrice">-</td>
+  </tr>
+</table>
+
+<script src="app.js"></script>
+</body>
+</html>

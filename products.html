@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Products | Smart Furnish</title>
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    .card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="navbar">
+  <strong>Smart Furnish</strong>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="cart.html">Cart</a>
+  </div>
+</div>
+
+<div class="layout">
+
+  <div class="sidebar">
+    <h3>Categories</h3>
+    <a href="products.html?category=king">King Beds</a>
+    <a href="products.html?category=queen">Queen Beds</a>
+    <a href="products.html?category=bunk">Bunk Beds</a>
+    <a href="products.html?category=storage">Storage Beds</a>
+  </div>
+
+  <div class="products" id="grid"></div>
+</div>
+
+<script>
+  const params = new URLSearchParams(window.location.search);
+  const category = params.get("category");
+
+  fetch("http://localhost:5000/api/products")
+    .then(res => res.json())
+    .then(apiProducts => {
+
+      if (!Array.isArray(apiProducts)) {
+        console.error("Products API not returning array:", apiProducts);
+        return;
+      }
+
+      /* 🔹 ADDITION — load user listed products (SAFE, DOES NOT TOUCH API) */
+      const userProducts = JSON.parse(localStorage.getItem("userProducts")) || [];
+
+      /* 🔹 Combine both (Buy products + Sell products) */
+      const allProducts = [...apiProducts, ...userProducts];
+
+      const filtered = category
+        ? allProducts.filter(p => p.category === category)
+        : allProducts;
+
+      const grid = document.getElementById("grid");
+      grid.innerHTML = "";
+
+      filtered.forEach(p => {
+
+        const img = (p.images && p.images.length > 0)
+          ? p.images[0]
+          : "images/no-image.png";
+
+        /* 🔹 Works for BOTH:
+           API → productId
+           User → id
+        */
+        const id = p.productId || p.id;
+
+        grid.innerHTML += `
+          <div class="card">
+            <img 
+              src="${img}"
+              alt="${p.name}"
+              onerror="this.src='images/no-image.png'"
+            >
+            <h4>${p.name}</h4>
+            <p>₹${p.price}</p>
+
+            <button onclick="location.href='product.html?id=${id}'">
+              View Product
+            </button>
+          </div>
+        `;
+      });
+    })
+    .catch(err => console.error("❌ Error loading products:", err));
+</script>
+
+</body>
+</html>

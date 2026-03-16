@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Sell Product | Smart Furnish</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <script>
+  if (!localStorage.getItem("currentSeller")) {
+    const name = prompt("Enter your seller name (used as login)");
+    localStorage.setItem("currentSeller", name);
+  }
+</script>
+
+<div class="navbar">
+  <strong>Smart Furnish</strong>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="products.html">Buy</a>
+    <a href="sell.html">Sell</a>
+    <a href="cart.html">Cart</a>
+  </div>
+</div>
+
+<div class="sell-container">
+
+  <div class="sell-form">
+    <h2>Sell Your Product</h2>
+
+    <label>Product Name</label>
+    <input type="text" id="productName">
+
+    <label>Category</label>
+    <select id="category">
+      <option value="king">King Bed</option>
+      <option value="queen">Queen Bed</option>
+      <option value="bunk">Bunk Bed</option>
+      <option value="storage">Storage Bed</option>
+    </select>
+
+    <label>Cost Price (₹)</label>
+    <input type="number" id="costPrice">
+
+    <label>Selling Price (₹)</label>
+    <input type="number" id="sellPrice" oninput="updateTable()">
+
+    <h3>Price Breakdown</h3>
+    <table class="price-table">
+      <tr><td>Cost Price</td><td id="tCost">0</td></tr>
+      <tr><td>Selling Price</td><td id="tSell">0</td></tr>
+      <tr><td>Commission (10%)</td><td id="tCommission">0</td></tr>
+      <tr><td><b>Seller Profit</b></td><td><b id="tProfit">0</b></td></tr>
+    </table>
+
+    <label>Upload Product Image</label>
+    <input type="file" id="imageInput" accept="image/*">
+
+    <button onclick="addProduct()">Add Product</button>
+  </div>
+
+  <div class="sell-preview">
+    <h2>Listed Products</h2>
+    <div id="sellGrid"></div>
+  </div>
+
+</div>
+
+<script src="sell.js"></script>
+</body>
+</html>

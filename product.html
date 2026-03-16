@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Product Details | Smart Furnish</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+  <strong>Smart Furnish</strong>
+  <div>
+    <a href="index.html">Home</a>
+    <a href="products.html">Buy</a>
+    <a href="cart.html">Cart</a>
+  </div>
+</div>
+
+<!-- PRODUCT PAGE -->
+<div class="product-page">
+
+  <div class="product-images">
+    <img id="mainImage" class="main-img">
+    <div class="thumbs" id="thumbnailContainer"></div>
+  </div>
+
+  <div class="product-details">
+    <h1 id="productName"></h1>
+    <p class="price" id="productPrice"></p>
+    <p id="productDesc"></p>
+
+    <div class="qty">
+      <button onclick="changeQty(-1)">−</button>
+      <span id="qty">1</span>
+      <button onclick="changeQty(1)">+</button>
+    </div>
+
+    <div class="action-buttons">
+      <button id="addToCartBtn" class="add-cart">Add to Cart</button>
+      <button onclick="buyNow()">Buy Now</button>
+
+
+
+    </div>
+
+    <ul id="featureList"></ul>
+  </div>
+
+</div>
+
+
+<script src="api.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>

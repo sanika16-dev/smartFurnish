@@ -1,0 +1,15 @@
+fetch("http://localhost:5000/api/products", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    productId: "king99",
+    name: "Test Bed",
+    price: 20000,
+    desc: "Test product",
+    images: ["images/king/king1/front1.png"],
+    features: ["Test feature"],
+    category: "king"
+  })
+})
+.then(res => res.json())
+.then(console.log)
